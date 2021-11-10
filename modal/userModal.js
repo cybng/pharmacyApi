@@ -21,8 +21,7 @@ const userSchema = new mongoose.Schema({
   	trim:true,
   	min:4,
   	max:20,
-    default:null,
-  	required:true
+    default:null
   },
   email:{
   	type:String,
@@ -43,8 +42,8 @@ const userSchema = new mongoose.Schema({
   	trim:true,
   	min:4,
   	max:20,
-  	enum:["user","admin"],
-  	default:"user",
+  	enum:["user","seller","admin"],
+  	default:null,
   	required:true
   },
 

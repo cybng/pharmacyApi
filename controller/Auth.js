@@ -7,8 +7,10 @@ const {responseError,responseSuccess} = require("../helper/Status");
 
 exports.login = (req,res) =>{
      const {email,password} = req.body;
+     console.log(req.body);
      User.findOne({email:email})
          .exec(async(err,data)=>{
+
          	if(err){
          		return responseError(res,201,4);
          	}
@@ -27,26 +29,27 @@ exports.login = (req,res) =>{
          })
 }
 
-exports.reg=(req,res)=>{
-
+exports.reg=(req,res)=>{ 
     const {fname,lname,email,username,password} = req.body;
+ 
     User.findOne({email:email}).exec(async(err,data)=>{
-    	if(err){
-    		return responseError(res,201,4);
-    	}
+    	
     	if(data){
     		return responseError(res,201,14);
     	}
     	const hashPassword =  await bcrypt.hash(password,10);
     	const userData =new User({
-    		fname,lname,email,username,hashPassword
+    		fname,lname,email,hashPassword
     	});
-
-    	userData.save((err,data)=>{
+        
+    	userData.save((err,dt)=>{
+            
     		if(err){
+                console.log(err);
     			return responseError(res,201,4);
     		}
     		if(data){
+                console.log(data)
     			const token = jwt.sign({_id:data._id,role:data.role},process.env.port,{expiresIn:"1d"})
     			res.cookie("token",token,{expiresIn:"1d"})
                 const {_id,fname,lname,email,username,role,fullname} = data;

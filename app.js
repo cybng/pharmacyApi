@@ -4,11 +4,13 @@ const cors = require("cors");
 const app = express();
 const env = require("dotenv"); 
 const userAuthRouter = require("./router/Auth");
+const categoryRouter = require("./router/categoryRouter");
 
 env.config();
 app.use(express.json()) ;
 app.use(cors());
 app.use("/api",userAuthRouter);
+app.use("/api",categoryRouter);
 
 
 

@@ -28,6 +28,8 @@
     "express-validator": "^6.13.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.12",
-    "nodemon": "^2.0.14"
+    "nodemon": "^2.0.14",
+    "shortid": "^2.2.16",
+    "slugify": "^1.6.2"
   }
 }
