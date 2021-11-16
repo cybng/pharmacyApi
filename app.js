@@ -14,25 +14,13 @@ app.use("/api",userAuthRouter);
 app.use("/api",categoryRouter);
 
 
+const requestListener = function (req, res) {};
 
-// app.listen(process.env.PORT,()=>{
-// 	console.log(`Server connected...${process.env.port}`);
-// })
-
-
-
-const hostname = '217.21.78.65';
-const port = 3000;
-
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('APi Working...\n');
+const server = http.createServer(app);
+server.listen(process.env.port, process.env.host, () => {
+    console.log(`Server is running on http://${host}:${port}`);
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
 
 
 mongoose.connect('mongodb://localhost:27017/phrmacy').then(c=>{
