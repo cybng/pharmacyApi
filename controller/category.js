@@ -28,8 +28,7 @@ function createCategories(categories, parentId = null) {
 }
 
 
-exports.addcategory=(req,res)=>{
-	console.log(req.body);
+exports.addcategory=(req,res)=>{ 
      const categoryObject={
      	name:req.body.categoryName,
         slug: `${slugify(req.body.categoryName)}-${shortid.generate()}`,

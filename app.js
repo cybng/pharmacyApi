@@ -18,7 +18,7 @@ const requestListener = function (req, res) {};
 
 const server = http.createServer(app);
 server.listen(process.env.port, process.env.host, () => {
-    console.log(`Server is running on http://${host}:${port}`);
+    console.log(`Server is running on http://${process.env.host}:${process.env.port}`);
 });
 
 

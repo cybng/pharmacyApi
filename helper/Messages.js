@@ -10,6 +10,7 @@ exports.msg=["success",
              "Invalid Password",
              "Invalid Username",
              "Invalid Email",
+             "Invalid OTP",
              "Required",
              "Surprize...",
              "Allready Exist"

@@ -42,10 +42,18 @@ const userSchema = new mongoose.Schema({
   	trim:true,
   	min:4,
   	max:20,
-  	enum:["user","seller","admin"],
+  	enum:["Buyer","Seller","Admin"],
   	default:null,
   	required:true
   },
+  otp:{
+    type:String,
+    trim:true,
+    min:6,
+    max:6,
+    default:null,
+    required:true
+  }
 
 },{timestamps:true})
 
