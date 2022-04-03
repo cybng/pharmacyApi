@@ -53,6 +53,17 @@ const userSchema = new mongoose.Schema({
     max:6,
     default:null,
     required:true
+  },
+  generalVerification:{
+    type:String,
+    trim:true,
+    default:"0",
+    required:true
+  },
+  otpVerification:{
+    type:String,
+    trim:true,
+    default:"0"
   }
 
 },{timestamps:true})

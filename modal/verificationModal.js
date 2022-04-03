@@ -8,40 +8,29 @@ const verificationSchema = new mongoose.Schema({
 	},
 	companyName:{
 		type:String,
-		trim:true,
-		required:true,
+		trim:true, 
 		default:null
 	},
 	mobileNumber:{
 		type:String,
-		trim:true,
-		required:true,
+		trim:true, 
 		default:null
 	},
 	gstNumber:{
 		type:String,
-		trim:true,
-		required:true,
+		trim:true, 
 		default:null
-	},
-	typeOfTrade:{
-		type:String,
-		trim:true,
-		required:true,
-		default:null
-	},
+	}, 
 	paymentTerm:{
 		type:String,
-		trim:true,
-		required:true,
+		trim:true, 
 		default:null
 	},
 	address:Array,
 	status:{
 		type:String,
-		trim:true,
-		required:true,
-		default:null
+		trim:true, 
+		default:"0"
 	}
 },{timestamps:true});
 

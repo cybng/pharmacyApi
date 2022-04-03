@@ -6,12 +6,16 @@ const app = express();
 const env = require("dotenv"); 
 const userAuthRouter = require("./router/Auth");
 const categoryRouter = require("./router/categoryRouter");
+const sellerRouter = require("./router/Seller");
+const adminRouter = require("./router/AdminRouter");
 
 env.config();
 app.use(express.json()) ;
 app.use(cors());
 app.use("/api",userAuthRouter);
 app.use("/api",categoryRouter);
+app.use("/api",sellerRouter);
+app.use("/api",adminRouter);
 
 
 const requestListener = function (req, res) {};
