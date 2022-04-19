@@ -8,6 +8,7 @@ const userAuthRouter = require("./router/Auth");
 const categoryRouter = require("./router/categoryRouter");
 const sellerRouter = require("./router/Seller");
 const adminRouter = require("./router/AdminRouter");
+const cartRouter = require("./router/CartRouter");
 
 env.config();
 app.use(express.json()) ;
@@ -16,6 +17,7 @@ app.use("/api",userAuthRouter);
 app.use("/api",categoryRouter);
 app.use("/api",sellerRouter);
 app.use("/api",adminRouter);
+app.use("/api",cartRouter);
 
 
 const requestListener = function (req, res) {};

@@ -84,6 +84,7 @@ exports.otpVerification=(req,res)=>{
                  
 
                 var cryptId = mongoose.Types.ObjectId(userId);
+                console.log(cryptId);
                 User.findOne({$and:[{_id:cryptId,otpVerification:"1"}]}).exec((errOtp,getOtp)=>{
                  console.log({"all OTP Data":getOtp})   
 

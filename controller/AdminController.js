@@ -82,3 +82,14 @@ exports.getProductDetail=(req,res)=>{
         } 
 	 })
 }
+
+exports.getAllProduct=(req,res)=>{
+	SellerProductModel.find({},(err,data)=>{
+		if(err){
+			return responseError(res,201,4);
+		}
+		if(data){
+			return responseSuccess(res,200,data);
+		}
+	})
+}

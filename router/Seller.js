@@ -4,7 +4,7 @@ const path = "../controller";
 const multer  = require('multer')
 const picPath = require("path");
 const shortid = require("shortid");
-const {sellerFile} = require(`${path}/Seller`);
+const {sellerFile,addProduct} = require(`${path}/Seller`);
 const {general} = require(`${path}/Verification`);
 
  const storage = multer.diskStorage({
@@ -19,5 +19,5 @@ const {general} = require(`${path}/Verification`);
 const upload = multer({ storage });
 
  router.post("/sellerFile",upload.single('csvFile'),sellerFile);
-
+ router.post("/addProduct",addProduct);
 module.exports = router;
