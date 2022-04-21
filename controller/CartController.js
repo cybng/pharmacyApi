@@ -1,4 +1,6 @@
+const mongoose = require("mongoose");
 const Cart = require("../modal/cartModel");
+var nodemailer = require('nodemailer');
 const Availbility = require("../modal/availbilityModal");
 
 function runUpdate(condition, updateData) {
@@ -12,7 +14,7 @@ function runUpdate(condition, updateData) {
 }
 
 exports.addItemToCart = (req, res) => {
-  Cart.findOne({ user: req.user._id }).exec((error, cart) => {
+  Cart.findOne({ user: req.body.user }).exec((error, cart) => {
     if (error) return res.status(400).json({ error });
     if (cart) {
       //if cart already exists then update cart by quantity
@@ -23,14 +25,14 @@ exports.addItemToCart = (req, res) => {
         const item = cart.cartItems.find((c) => c.product == product);
         let condition, update;
         if (item) {
-          condition = { user: req.user._id, "cartItems.product": product };
+          condition = { user: req.body.user, "cartItems.product": product };
           update = {
             $set: {
               "cartItems.$": cartItem,
             },
           };
         } else {
-          condition = { user: req.user._id };
+          condition = { user: req.body.user };
           update = {
             $push: {
               cartItems: cartItem,
@@ -53,7 +55,7 @@ exports.addItemToCart = (req, res) => {
     } else {
       //if cart not exist then create a new cart
       const cart = new Cart({
-        user: req.user._id,
+        user: req.body.user,
         cartItems: req.body.cartItems,
       });
       cart.save((error, cart) => {
@@ -71,7 +73,7 @@ exports.addItemToCart = (req, res) => {
 //     if(cartItems){
 //        if(Object.keys(cartItems).length > 0){
 //            Cart.findOneAndUpdate({
-//                "user": req.user._id
+//                "user": req.body.user
 //            }, {
 //                "cartItems": cartItems
 //            }, {
@@ -90,7 +92,7 @@ exports.addItemToCart = (req, res) => {
 exports.getCartItems = (req, res) => {
   //const { user } = req.body.payload;
   //if(user){
-  Cart.findOne({ user: req.user._id })
+  Cart.findOne({ user: req.body.user })
     .populate("cartItems.product", "_id name price productPictures")
     .exec((error, cart) => {
       if (error) return res.status(400).json({ error });
@@ -116,7 +118,7 @@ exports.removeCartItems = (req, res) => {
   const { productId } = req.body.payload;
   if (productId) {
     Cart.update(
-      { user: req.user._id },
+      { user: req.body.user },
       {
         $pull: {
           cartItems: {
@@ -148,3 +150,89 @@ exports.checkAvailbility=(req,res)=>{
   }
  })
 }
+
+exports.requestdata=(req,res)=>{
+  const {requestId} = req.body;
+console.log(requestId)
+const bb ="6255c42e4c50e64960038647"
+const aa =mongoose.Types.ObjectId(bb);
+   Cart.find({ "cartItems": { $elemMatch: { $or: [
+        {
+         uploadby:requestId
+        }
+      ]} } },(err,data)=>{
+    if(err){
+      console.log(err)
+      return res.status(201).json({msg:"Something went wrong"})
+    }
+    if(data){
+var totalFindData=[]
+data.forEach(query => {
+ query.cartItems.forEach(data=>{
+  if(data.uploadby===requestId){
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'r4hmail@gmail.com',
+    pass: '#Rahuly890'
+  }
+});
+
+var mailOptions = {
+  from: 'r4hmail@gmail.com',
+  to: 'r4hmail@gmail.com',
+  subject: data.product,
+  text: 'That was easy!'
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log("Email sent");
+  }
+});
+
+
+     totalFindData.push(data)
+}
+
+ })
+  
+
+})
+    // const jsn=JSON.stringify(totalFindData)
+    return res.status(200).json(totalFindData);
+
+
+      
+    }
+  })
+ 
+ 
+// );
+  // Cart.find({ cartItems:{$match[{ uploadBy: mongoose.Types.ObjectId(requestId) }]  },(err,data)=>{
+  //   if(err){
+  //     return res.status(201).json({msg:"Something went wrong"})
+  //   }
+  //   if(data){
+  //     return res.status(200).json({data:data,id:requestId});
+  //   }
+  // })
+}
+
+exports.updateavaility=(req,res)=>{
+  const {userId} = req.body;
+  Cart.find({user:userId},(err,data)=>{
+    if(err){
+      return res.status(201).json({msg:"Something went wrong"});
+    }
+    if(data){
+      console.log(data);
+      return res.status(200).json(data);
+    }
+  })
+}
+
+

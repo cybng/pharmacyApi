@@ -5,7 +5,9 @@ const {
   addToCart,
   getCartItems,
   removeCartItems,
-  checkAvailbility
+  checkAvailbility,
+  requestdata,
+  updateavaility
 } = require("../controller/CartController");
 
 router.post(
@@ -21,5 +23,7 @@ router.post(
 );
 
 router.post("/checkAvailbility",checkAvailbility);
+router.post("/requestdata",requestdata);
+router.post("/updateavaility",updateavaility);
 
 module.exports = router;
